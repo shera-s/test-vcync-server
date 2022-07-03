@@ -49,7 +49,7 @@ const typeDefs = gql`
         profiletype:String
     }
 
-    type vcffile{
+    type file{
         firstName:String
         file:String
     }
@@ -60,7 +60,8 @@ const typeDefs = gql`
         getOtp:[Otp]
         getAllProfile: [Profile]
         getProfilebyId(id: ID): Profile
-        generatevcffile(id:ID) : vcffile
+        generatevcffile(id:ID) : file
+        generatepkpass(id:ID):file
     }
 
     input UserInput{

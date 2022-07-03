@@ -9,6 +9,9 @@ const otpVerify = require("./modal/otpVerification");
 const httpRequest = require("https");
 const Profile = require("./modal/Profile");
 const vCardsJS = require("vcards-js");
+const { Template } = require("@walletpass/pass-js");
+const fs = require("fs");
+const path = require("path");
 
 dotenv.config();
 
@@ -48,7 +51,7 @@ const resolvers = {
       });
       return await Profile.findOne({ where: { user_id: id } });
     },
-    generatevcffile: async (parent, {id}, context, info) => {
+    generatevcffile: async (parent, { id }, context, info) => {
       await Profile.sync({
         force: false,
       });
@@ -65,7 +68,7 @@ const resolvers = {
         note,
         photo,
       } = profile.userDetails[0];
-      
+
       var vCard = vCardsJS();
       vCard.firstName = firstName;
       vCard.lastName = lastName;
@@ -76,12 +79,38 @@ const resolvers = {
       vCard.birthday = new Date(birthday);
       vCard.url = url;
       vCard.note = note;
-      vCard.photo.embedFromString(photo.split("data:image/jpeg\;base64\,").pop(),'image/jpeg')
+      vCard.photo.embedFromString(
+        photo.split("data:image/jpeg;base64,").pop(),
+        "image/jpeg"
+      );
       const data = {
-        file:vCard.getFormattedString(),
-        firstName
-      }
-      return data
+        file: vCard.getFormattedString(),
+        firstName,
+      };
+      return data;
+    },
+    generatepkpass: async (parent, { id }, context, info) => {
+      await Profile.sync({
+        force: false,
+      });
+      const profile = await Profile.findOne({ where: { user_id: id } });
+      const {
+        firstName,
+        lastName,
+        workEmail,
+        workPhone,
+        organization,
+        title,
+        birthday,
+        url,
+        note,
+        photo,
+      } = profile.userDetails[0];
+      const data = {
+        file: "file",
+        firstName,
+      };
+      return data;
     },
   },
   Mutation: {
@@ -127,18 +156,21 @@ const resolvers = {
       return "User Deleted Sucessful";
     },
     updateUser: async (parent, args, context, info) => {
-      const { id } = args;
-      const { name, phoneNumber } = args.user;
-      const updates = {};
-      if (name !== undefined) {
-        updates.name = name;
-      }
-      if (phoneNumber !== undefined) {
-        updates.phoneNumber = phoneNumber;
-      }
-      const findUser = await UserInfo.findOne({ where: { id } });
-      const user = findUser.update(updates);
-      return user;
+        const { id } = args;
+        const { name, phoneNumber, email } = args.user;
+        const updates = {};
+        if (name !== undefined) {
+          updates.name = name;
+        }
+        if (phoneNumber !== undefined) {
+          updates.phoneNumber = phoneNumber;
+        }
+        if (email !== undefined) {
+          updates.email = email;
+        }
+          const findUser = await UserInfo.findOne({ where: { id } });
+        const user = findUser.update(updates);
+        return user;
     },
     login: async (parent, args, context, info) => {
       UserInfo.sync({
@@ -377,8 +409,14 @@ const resolvers = {
         force: false,
       });
 
-      const { user_id, qrCode, extraInfo, socialData, userDetails, profiletype } =
-        args.profile;
+      const {
+        user_id,
+        qrCode,
+        extraInfo,
+        socialData,
+        userDetails,
+        profiletype,
+      } = args.profile;
       // return args.profile
 
       try {
@@ -463,7 +501,7 @@ const resolvers = {
       } catch (error) {
         return new AuthenticationError(error);
       }
-    }
+    },
   },
 };
 

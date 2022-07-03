@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@walletpass/pass-js": "^6.9.1",
     "apollo-server-core": "^3.9.0",
     "apollo-server-express": "^3.8.2",
     "bcryptjs": "^2.4.3",
