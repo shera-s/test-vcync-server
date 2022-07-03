@@ -157,13 +157,10 @@ const resolvers = {
     },
     updateUser: async (parent, args, context, info) => {
         const { id } = args;
-        const { name, phoneNumber, email } = args.user;
+        const { name, email } = args.user;
         const updates = {};
         if (name !== undefined) {
           updates.name = name;
-        }
-        if (phoneNumber !== undefined) {
-          updates.phoneNumber = phoneNumber;
         }
         if (email !== undefined) {
           updates.email = email;

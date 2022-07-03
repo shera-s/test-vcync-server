@@ -19,6 +19,7 @@ async function startServer() {
         formatError: (err) => {
         return err;
         },
+        introspection:true
     })
 
     await apolloServer.start()
