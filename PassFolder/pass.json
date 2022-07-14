@@ -1,0 +1,37 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "pass.com.apple.devpubs.example",
+  "serialNumber": "nmyuxofgna",
+  "teamIdentifier": "A93A5CM278",
+  "webServiceURL": "https://example.com/passes/",
+  "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
+  "relevantDate": "2011-12-08T13:00-04:00",
+  "barcodes":[
+    {
+      "altText":"My Profile",
+      "message": "http://localhost:5000/",
+      "format": "PKBarcodeFormatQR",
+      "messageEncoding": "iso-8859-1"
+    }
+  ],
+  "organizationName": "Vcync",
+  "description": "Vcync-Card",
+  "foregroundColor": "rgb(255, 255, 255)",
+  "backgroundColor": "rgb(60, 65, 76)",
+  "generic": {
+    "primaryFields": [
+      {
+        "key": "name",
+        "label": "Name",
+        "value": "My_Name"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key": "phone",
+        "label": "Phone Number",
+        "value": "1234567890"
+      }
+    ]
+  }
+}

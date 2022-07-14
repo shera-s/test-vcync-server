@@ -10,8 +10,12 @@ const httpRequest = require("https");
 const Profile = require("./modal/Profile");
 const vCardsJS = require("vcards-js");
 const { Template } = require("@walletpass/pass-js");
-const fs = require("fs");
 const path = require("path");
+const Jimp = require("jimp");
+const fs = require("fs");
+const fspromises = require("fs/promises");
+var ExtendedASCII = require('bfs-buffer/js/extended_ascii').default;
+const cloudinary = require('./cloudinary');
 
 dotenv.config();
 
@@ -106,11 +110,74 @@ const resolvers = {
         note,
         photo,
       } = profile.userDetails[0];
-      const data = {
-        file: "file",
-        firstName,
-      };
-      return data;
+      const template = await Template.load("./PassFolder", "123123aA", {
+        allowHttp: true,
+      });
+      await template.loadCertificate(
+        "./PassFolder/com.example.passbook.pem",
+        "123123aA"
+      );
+      const pass = template.createPass({
+        serialNumber: id,
+        description: "Vcync Personal Card",
+        organizationName: firstName+' Vcync Card',
+        barcode: {
+          altText: "My Profile",
+          message: process.env.FrontendURL+id,
+          format: "PKBarcodeFormatQR",
+          messageEncoding: "iso-8859-1",
+        },
+      });
+      pass.primaryFields.add({ key: "name", label: "Name", value: firstName });
+      pass.secondaryFields.add({
+        key: "phone",
+        label: "Phone Number",
+        value: workPhone,
+      });
+      var base64Data = photo.replace(/^data:image\/png;base64,/, "");
+      
+      let d
+      await fspromises.writeFile(
+        "photo.png",
+        base64Data,
+        "base64").then(async(res)=>{
+            
+          await pass.images.add("icon", "./photo.png", "1x", "ru");
+          await pass.images.add("icon", "./photo.png", "2x", "ru");
+          await pass.images.add(
+            "background",
+            "./PassFolder/background.jpg",
+            "1x",
+            "ru"
+            );
+          await pass.images.add(
+            "background",
+            "./PassFolder/background@2x.jpg",
+            "2x",
+            "ru"
+            );
+          await pass.images.add("thumbnail", "./photo.png", "1x", "ru");
+          await pass.images.add("thumbnail", "./photo.png", "2x", "ru");
+          // console.log(pass);
+          const buf = await pass.asBuffer();
+          // console.log(buf)
+          await fspromises.writeFile("pathToPass.pkpass", buf).then( async(err, result) => {
+              await cloudinary.v2.uploader.destroy(id)
+              const file = await cloudinary.v2.uploader.upload('pathTopass.pkpass',{
+                folder:'pkpasses',
+                public_id:id,
+                resource_type:'raw'
+              })
+              const data = {
+                file:file.url,
+                firstName,
+              };
+              // console.log(data)
+              d = data;
+            })
+      })
+      // console.log(d)
+      return d
     },
   },
   Mutation: {
@@ -156,18 +223,18 @@ const resolvers = {
       return "User Deleted Sucessful";
     },
     updateUser: async (parent, args, context, info) => {
-        const { id } = args;
-        const { name, email } = args.user;
-        const updates = {};
-        if (name !== undefined) {
-          updates.name = name;
-        }
-        if (email !== undefined) {
-          updates.email = email;
-        }
-          const findUser = await UserInfo.findOne({ where: { id } });
-        const user = findUser.update(updates);
-        return user;
+      const { id } = args;
+      const { name, email } = args.user;
+      const updates = {};
+      if (name !== undefined) {
+        updates.name = name;
+      }
+      if (email !== undefined) {
+        updates.email = email;
+      }
+      const findUser = await UserInfo.findOne({ where: { id } });
+      const user = findUser.update(updates);
+      return user;
     },
     login: async (parent, args, context, info) => {
       UserInfo.sync({
