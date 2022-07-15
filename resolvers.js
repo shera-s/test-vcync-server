@@ -138,7 +138,7 @@ const resolvers = {
       
       let d
       await fspromises.writeFile(
-        "photo.png",
+        __dirname+"/photo.png",
         base64Data,
         "base64").then(async(res)=>{
             
@@ -161,9 +161,9 @@ const resolvers = {
           // console.log(pass);
           const buf = await pass.asBuffer();
           // console.log(buf)
-          await fspromises.writeFile("pathToPass.pkpass", buf).then( async(result) => {
+          await fspromises.writeFile(__dirname+"/pathToPass.pkpass", buf).then( async(result) => {
               await cloudinary.v2.uploader.destroy(id)
-              const file = await cloudinary.v2.uploader.upload('pathTopass.pkpass',{
+              const file = await cloudinary.v2.uploader.upload(__dirname+'/pathTopass.pkpass',{
                 folder:'pkpasses',
                 public_id:id,
                 resource_type:'raw'
