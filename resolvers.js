@@ -156,7 +156,7 @@ const resolvers = {
             "2x",
             "ru"
             );
-          await pass.images.add("thumbnail", "./photo.png", "1x", "ru");
+          // await pass.images.add("thumbnail", "./photo.png", "1x", "ru");
           await pass.images.add("thumbnail", "./photo.png", "2x", "ru");
           // console.log(pass);
           const buf = await pass.asBuffer();
