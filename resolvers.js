@@ -169,7 +169,7 @@ const resolvers = {
                 resource_type:'raw'
               })
               const data = {
-                file:file.url,
+                file:file.secure_url,
                 firstName,
               };
               console.log(data)
