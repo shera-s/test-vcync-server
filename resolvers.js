@@ -161,7 +161,7 @@ const resolvers = {
           // console.log(pass);
           const buf = await pass.asBuffer();
           // console.log(buf)
-          await fspromises.writeFile("pathToPass.pkpass", buf).then( async(err, result) => {
+          await fspromises.writeFile("pathToPass.pkpass", buf).then( async(result) => {
               await cloudinary.v2.uploader.destroy(id)
               const file = await cloudinary.v2.uploader.upload('pathTopass.pkpass',{
                 folder:'pkpasses',
@@ -172,10 +172,10 @@ const resolvers = {
                 file:file.url,
                 firstName,
               };
-              // console.log(data)
+              console.log(data)
               d = data;
-            })
-      })
+            }).catch((err)=>console.log(err))
+      }).catch((err)=>console.log(err))
       // console.log(d)
       return d
     },
