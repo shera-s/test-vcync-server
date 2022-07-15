@@ -172,7 +172,7 @@ const resolvers = {
                 file:file.secure_url,
                 firstName,
               };
-              console.log(data)
+              // console.log(data)
               d = data;
             }).catch((err)=>console.log(err))
       }).catch((err)=>console.log(err))
