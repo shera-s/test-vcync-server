@@ -163,7 +163,7 @@ const resolvers = {
           // console.log(buf)
           await fspromises.writeFile(__dirname+"/pathToPass.pkpass", buf).then( async(result) => {
               await cloudinary.v2.uploader.destroy(id)
-              const file = await cloudinary.v2.uploader.upload(__dirname+'/pathTopass.pkpass',{
+              const file = await cloudinary.v2.uploader.upload(__dirname+'/pathToPass.pkpass',{
                 folder:'pkpasses',
                 public_id:id,
                 resource_type:'raw'
