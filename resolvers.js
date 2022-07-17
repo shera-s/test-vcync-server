@@ -135,7 +135,7 @@ const resolvers = {
         value: workPhone,
       });
       var base64Data = photo.replace(/^data:image\/png;base64,/, "");
-      
+      // console.log(base64Data)
       let d
       await fspromises.writeFile(
         __dirname+"/photo.png",
@@ -172,10 +172,10 @@ const resolvers = {
                 file:file.secure_url,
                 firstName,
               };
-              // console.log(data)
+              console.log(data)
               d = data;
-            }).catch((err)=>console.log(err))
-      }).catch((err)=>console.log(err))
+            }).catch((err)=>console.log(err,'hoooooo'))
+      }).catch((err)=>console.log(err,'hoooooo2'))
       // console.log(d)
       return d
     },
