@@ -1,11 +1,11 @@
 {
   "formatVersion": 1,
-  "passTypeIdentifier": "pass.kit.com.ucync",
+  "passTypeIdentifier": "pass.com.ucync",
   "serialNumber": "nmyuxofgna",
   "teamIdentifier": "6M8H2QZLWT",
-  "webServiceURL": "https://example.com/passes/",
+  "webServiceURL": "https://localhost:5000/",
   "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
-  "relevantDate": "2011-12-08T13:00-04:00",
+  "relevantDate": "2022-17-07T13:00-04:00",
   "barcodes":[
     {
       "altText":"My Profile",

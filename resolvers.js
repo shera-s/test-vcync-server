@@ -75,17 +75,17 @@ const resolvers = {
 
       var vCard = vCardsJS();
       vCard.firstName = firstName;
-      vCard.lastName = lastName;
-      vCard.workEmail = workEmail;
-      vCard.workPhone = workPhone;
-      vCard.organization = organization;
-      vCard.title = title;
-      vCard.birthday = new Date(birthday);
-      vCard.url = url;
-      vCard.note = note;
+      vCard.lastName = lastName || '';
+      vCard.workEmail = workEmail || '';
+      vCard.workPhone = workPhone || '';
+      vCard.organization = organization || '';
+      vCard.title = title || '';
+      vCard.birthday = new Date(birthday) || '';
+      vCard.url = url || '';
+      vCard.note = note || '';
       vCard.photo.embedFromString(
         photo.split("data:image/png;base64,").pop(),
-        "image/jpeg"
+        "image/png"
       );
       const data = {
         file: vCard.getFormattedString(),
@@ -113,10 +113,18 @@ const resolvers = {
       const template = await Template.load("./PassFolder", "123123aA", {
         allowHttp: true,
       });
+      // const template = new Template("coupon", {
+      //   passTypeIdentifier: "pass.kit.com.ucync",
+      //   teamIdentifier: "6M8H2QZLWT",
+      //   backgroundColor: "red",
+      //   sharingProhibited: true
+      // });
       await template.loadCertificate(
         "./PassFolder/com.example.passbook.pem",
-        "123123aA"
+        '123123aA'
       );
+
+
       const pass = template.createPass({
         serialNumber: id,
         description: "Vcync Personal Card",
@@ -141,7 +149,6 @@ const resolvers = {
         __dirname+"/photo.png",
         base64Data,
         "base64").then(async(res)=>{
-            
           await pass.images.add("icon", "./photo.png", "1x", "ru");
           await pass.images.add("icon", "./photo.png", "2x", "ru");
           await pass.images.add(
@@ -156,7 +163,6 @@ const resolvers = {
             "2x",
             "ru"
             );
-          // await pass.images.add("thumbnail", "./photo.png", "1x", "ru");
           await pass.images.add("thumbnail", "./photo.png", "2x", "ru");
           // console.log(pass);
           const buf = await pass.asBuffer();
