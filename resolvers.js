@@ -80,7 +80,7 @@ const resolvers = {
       vCard.workPhone = workPhone || '';
       vCard.organization = organization || '';
       vCard.title = title || '';
-      vCard.birthday = new Date(birthday) || '';
+      vCard.birthday = new Date(birthday);
       vCard.url = url || '';
       vCard.note = note || '';
       vCard.photo.embedFromString(
