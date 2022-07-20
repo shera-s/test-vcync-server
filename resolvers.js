@@ -84,7 +84,7 @@ const resolvers = {
       vCard.url = url;
       vCard.note = note;
       vCard.photo.embedFromString(
-        photo.split("data:image/jpeg;base64,").pop(),
+        photo.split("data:image/png;base64,").pop(),
         "image/jpeg"
       );
       const data = {
