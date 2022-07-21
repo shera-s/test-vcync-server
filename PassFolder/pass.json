@@ -1,14 +1,19 @@
 {
   "formatVersion": 1,
-  "passTypeIdentifier": "pass.com.ucync",
-  "serialNumber": "nmyuxofgna",
+  "passTypeIdentifier": "pass.vcync.com",
+  "serialNumber": "gT6zrHkaW",
   "teamIdentifier": "6M8H2QZLWT",
-  "webServiceURL": "https://localhost:5000/",
+  "webServiceURL": "https://example.com/passes/",
   "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
-  "relevantDate": "2022-17-07T13:00-04:00",
-  "barcodes":[
+  "relevantDate": "2012-07-22T14:25-08:00",
+  "locations": [
     {
-      "altText":"My Profile",
+      "longitude": -122.3748889,
+      "latitude": 37.6189722
+    }
+  ],
+  "barcodes": [
+    {
       "message": "http://localhost:5000/",
       "format": "PKBarcodeFormatQR",
       "messageEncoding": "iso-8859-1"
@@ -16,8 +21,9 @@
   ],
   "organizationName": "Vcync",
   "description": "Vcync-Card",
-  "foregroundColor": "rgb(255, 255, 255)",
-  "backgroundColor": "rgb(60, 65, 76)",
+  "logoText": "Vcync Card",
+  "foregroundColor": "rgb(22, 55, 110)",
+  "backgroundColor": "rgb(50, 91, 185)",
   "generic": {
     "primaryFields": [
       {

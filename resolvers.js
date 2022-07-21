@@ -110,31 +110,25 @@ const resolvers = {
         note,
         photo,
       } = profile.userDetails[0];
-      const template = await Template.load("./PassFolder", "123123aA", {
+      const template = await Template.load("./PassFolder", "123456", {
         allowHttp: true,
       });
-      // const template = new Template("coupon", {
-      //   passTypeIdentifier: "pass.kit.com.ucync",
-      //   teamIdentifier: "6M8H2QZLWT",
-      //   backgroundColor: "red",
-      //   sharingProhibited: true
-      // });
-      await template.loadCertificate(
-        "./PassFolder/com.example.passbook.pem",
-        '123123aA'
-      );
 
+      await template.loadCertificate(
+        './PassFolder/com.example.passbook.pem',
+        '123456'
+      )
 
       const pass = template.createPass({
         serialNumber: id,
         description: "Vcync Personal Card",
         organizationName: firstName+' Vcync Card',
-        barcode: {
+        barcodes: [{
           altText: "My Profile",
           message: process.env.FrontendURL+id,
           format: "PKBarcodeFormatQR",
           messageEncoding: "iso-8859-1",
-        },
+        }],
       });
       pass.primaryFields.add({ key: "name", label: "Name", value: firstName });
       pass.secondaryFields.add({
@@ -148,7 +142,7 @@ const resolvers = {
       await fspromises.writeFile(
         __dirname+"/photo.png",
         base64Data,
-        "base64").then(async(res)=>{
+        "base64").then(async()=>{
           await pass.images.add("icon", "./photo.png", "1x", "ru");
           await pass.images.add("icon", "./photo.png", "2x", "ru");
           await pass.images.add(
@@ -178,7 +172,7 @@ const resolvers = {
                 file:file.secure_url,
                 firstName,
               };
-              console.log(data)
+              // console.log(data)
               d = data;
             }).catch((err)=>console.log(err,'hoooooo'))
       }).catch((err)=>console.log(err,'hoooooo2'))
