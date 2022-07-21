@@ -83,10 +83,13 @@ const resolvers = {
       vCard.birthday = new Date(birthday);
       vCard.url = url || '';
       vCard.note = note || '';
-      vCard.photo.embedFromString(
-        photo.split("data:image/png;base64,").pop(),
-        "image/png"
-      );
+      if(photo.includes('data:image/png;base64')){
+
+        vCard.photo.embedFromString(
+          photo.split("data:image/png;base64,").pop(),
+          "image/png"
+          );
+        }
       const data = {
         file: vCard.getFormattedString(),
         firstName,
