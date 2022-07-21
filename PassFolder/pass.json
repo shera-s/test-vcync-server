@@ -3,7 +3,7 @@
   "passTypeIdentifier": "pass.vcync.com",
   "serialNumber": "gT6zrHkaW",
   "teamIdentifier": "6M8H2QZLWT",
-  "webServiceURL": "https://example.com/passes/",
+  "webServiceURL": "https://vcync.com/",
   "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
   "relevantDate": "2012-07-22T14:25-08:00",
   "locations": [
@@ -22,9 +22,7 @@
   "organizationName": "Vcync",
   "description": "Vcync-Card",
   "logoText": "Vcync Card",
-  "foregroundColor": "rgb(22, 55, 110)",
-  "backgroundColor": "rgb(50, 91, 185)",
-  "generic": {
+  "eventTicket": {
     "primaryFields": [
       {
         "key": "name",

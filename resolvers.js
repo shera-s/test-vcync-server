@@ -145,18 +145,6 @@ const resolvers = {
         "base64").then(async()=>{
           await pass.images.add("icon", "./photo.png", "1x", "ru");
           await pass.images.add("icon", "./photo.png", "2x", "ru");
-          await pass.images.add(
-            "background",
-            "./PassFolder/background.jpg",
-            "1x",
-            "ru"
-            );
-          await pass.images.add(
-            "background",
-            "./PassFolder/background@2x.jpg",
-            "2x",
-            "ru"
-            );
           await pass.images.add("thumbnail", "./photo.png", "2x", "ru");
           // console.log(pass);
           const buf = await pass.asBuffer();
