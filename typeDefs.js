@@ -19,7 +19,8 @@ const typeDefs = gql`
     }
 
     type ExtraInfo{
-        extraInfo : String
+        title: String
+        value: String
     }
     type SocialData{
         platform: String
@@ -90,7 +91,8 @@ const typeDefs = gql`
         password:String
     }
     input ExtraInput{
-        extraInfo: String
+        title: String
+        value: String
     }
     input SocialInput{
         platform: String

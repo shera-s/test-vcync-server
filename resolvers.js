@@ -73,6 +73,13 @@ const resolvers = {
         photo,
       } = profile.userDetails[0];
 
+      const social = {
+        Instagram:'https://www.instagram.com/',
+        LinkedIn:'https://www.linkedin.com/in/',
+        Twitter:'https://www.twitter.com/',
+        Tiktok:'https://www.tiktok.com/@',
+      }
+
       var vCard = vCardsJS();
       vCard.firstName = firstName;
       vCard.lastName = lastName || '';
@@ -86,15 +93,24 @@ const resolvers = {
       }
       vCard.url = url || '';
       vCard.note = note || '';
+      if (profile.socialData[0]?.platform!== '') {
+        profile.socialData.forEach(element => {
+          vCard.socialUrls[element.platform] = social[element.platform]+element.username
+        });
+      }
       if(photo.includes('data:image/png;base64')){
-
         vCard.photo.embedFromString(
           photo.split("data:image/png;base64,").pop(),
           "image/png"
           );
         }
+        if(profile.extraInfo[0]?.title!== ''){
+          profile.extraInfo.forEach(element => {
+            vCard[element.title] = element.value
+          });
+        }
       const data = {
-        file: vCard.getFormattedString(),
+        file: vCard.getFormattedString().replace(/X-SOCIALPROFILE;CHARSET=UTF-8;/g, "X-SOCIALPROFILE;"),
         firstName,
       };
       return data;
